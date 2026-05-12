@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Login</title>
+    <title>Fitur Lupa Password</title>
     <style>
         body {
             font-family: sans-serif;
@@ -30,13 +30,12 @@
             font-weight: bold;
             color: #374151;
         }
-        input[type="email"],
         input[type="password"] {
             width: 100%;
             padding: 0.5rem;
             border: 1px solid #d1d5db;
             border-radius: 4px;
-            box-sizing: border-box; /* Memastikan padding tetap di dalam lebar 100% */
+            box-sizing: border-box;
         }
         button {
             width: 100%;
@@ -52,30 +51,65 @@
         button:hover {
             background-color: #2563eb;
         }
+        /* Tambahan styling untuk pesan error validasi */
+        .error-message {
+            color: #ef4444; /* Warna merah */
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            display: none; /* Disembunyikan secara default */
+        }
     </style>
 </head>
 <body>
 
     <div class="form-container">
-        <h2 style="text-align: center; margin-top: 0;">Login</h2>
+        <h2 style="text-align: center; margin-top: 0;">Reset Password</h2>
         
-        <form action="#" method="POST">
-            <!-- Input Email -->
+        <!-- Tambahkan ID pada form agar mudah ditangkap oleh JavaScript -->
+        <form id="resetForm" action="#" method="POST">
+            
+            <!-- Kriteria Mutlak 1: Form input password baru -->
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Masukkan email" required>
+                <label for="new_password">Password Baru</label>
+                <input type="password" id="new_password" name="new_password" placeholder="Masukkan password baru" required>
             </div>
             
-            <!-- Input Password (Karakter disembunyikan otomatis) -->
+            <!-- Kriteria Mutlak 2: Form ulangi password -->
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Masukkan password" required>
+                <label for="confirm_password">Ulangi Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Ulangi password baru" required>
             </div>
 
-            <!-- Tombol Submit -->
-            <button type="submit">Masuk</button>
+            <!-- Tempat untuk menampilkan pesan error validasi -->
+            <div id="error_msg" class="error-message">
+                Password dan Ulangi Password tidak cocok!
+            </div>
+
+            <!-- Kriteria Mutlak 3: Tombol Register -->
+            <button type="submit">Register</button>
         </form>
     </div>
+
+    <!-- Kriteria Mutlak 4: Validasi error kecocokan password menggunakan JavaScript -->
+    <script>
+        const form = document.getElementById('resetForm');
+        const newPassword = document.getElementById('new_password');
+        const confirmPassword = document.getElementById('confirm_password');
+        const errorMsg = document.getElementById('error_msg');
+
+        form.addEventListener('submit', function(event) {
+            // Mengecek apakah nilai password baru dan ulangi password berbeda
+            if (newPassword.value !== confirmPassword.value) {
+                // Mencegah form dikirim (submit)
+                event.preventDefault(); 
+                // Menampilkan pesan error
+                errorMsg.style.display = 'block'; 
+            } else {
+                // Menyembunyikan pesan error jika sudah cocok
+                errorMsg.style.display = 'none'; 
+            }
+        });
+    </script>
 
 </body>
 </html>
